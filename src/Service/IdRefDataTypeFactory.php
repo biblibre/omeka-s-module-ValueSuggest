@@ -12,59 +12,98 @@ class IdRefDataTypeFactory implements FactoryInterface
     protected $types = [
         'valuesuggest:idref:all' => [
             'label' => 'IdRef: All', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=0&rows=30&indent=on&fl=id,ppn_z,affcourt_r&q=all%3A',
+            'params' => [
+                'qf' => 'all',
+            ],
         ],
         'valuesuggest:idref:person' => [
             'label' => 'IdRef: Person names', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=persname_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:a',
+                'qf' => 'persname_t persname_s',
+            ],
         ],
         'valuesuggest:idref:corporation' => [
             'label' => 'IdRef: Collectivities', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=corpname_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:b',
+                'qf' => 'corpname_t corpname_s',
+            ],
         ],
         'valuesuggest:idref:conference' => [
             'label' => 'IdRef: Conferences', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=conference_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:s',
+                'qf' => 'conference_t conference_s',
+            ],
         ],
         'valuesuggest:idref:subject' => [
             'label' => 'IdRef: Subjects', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=subjectheading_t%3A',
+            'params' => [
+                'qf' => 'subjectheading_t subjectheading_s affcourt_z^20',
+            ],
         ],
         'valuesuggest:idref:rameau' => [
             'label' => 'IdRef: Subjects Rameau', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=recordtype_z%3Ar%20AND%20subjectheading_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:j',
+                'qf' => 'subjectheading_t subjectheading_s',
+            ],
         ],
         'valuesuggest:idref:fmesh' => [
             'label' => 'IdRef: Subjects F-MeSH', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=recordtype_z%3At%20AND%20subjectheading_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:t',
+                'qf' => 'subjectheading_t subjectheading_s',
+            ],
         ],
         'valuesuggest:idref:geo' => [
             'label' => 'IdRef: Geography', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=geogname_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:c',
+                'qf' => 'geogname_t geogname_s',
+            ],
         ],
         'valuesuggest:idref:family' => [
             'label' => 'IdRef: Family names', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=famname_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:e',
+                'qf' => 'famname_t famname_s',
+            ],
         ],
         'valuesuggest:idref:title' => [
             'label' => 'IdRef: Uniform titles', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=uniformtitle_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:f',
+                'qf' => 'uniformtitle_t uniformtitle_s',
+            ],
         ],
         'valuesuggest:idref:authorTitle' => [
             'label' => 'IdRef: Authors-Titles', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=nametitle_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:h',
+                'qf' => 'nametitle_t nametitle_s',
+            ],
         ],
         'valuesuggest:idref:trademark' => [
             'label' => 'IdRef: Trademarks', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=trademark_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:d',
+                'qf' => 'trademark_t trademark_s',
+            ],
         ],
         'valuesuggest:idref:ppn' => [
             'label' => 'IdRef: PPN id', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_z&q=ppn_z%3A',
+            'params' => [
+                'qf' => 'ppn_z',
+            ],
         ],
         'valuesuggest:idref:library' => [
             'label' => 'IdRef: Library registry (RCR)', // @translate
-            'url' => 'https://www.idref.fr/Sru/Solr?wt=json&version=2.2&start=&rows=30&indent=on&fl=id,ppn_z,affcourt_r&q=rcr_t%3A',
+            'params' => [
+                'fq' => 'recordtype_z:w',
+                'qf' => 'rcr_t',
+            ],
         ],
     ];
 
@@ -74,6 +113,6 @@ class IdRefDataTypeFactory implements FactoryInterface
         return $dataType
             ->setIdrefName($requestedName)
             ->setIdrefLabel($this->types[$requestedName]['label'])
-            ->setIdrefUrl($this->types[$requestedName]['url']);
+            ->setIdrefParams($this->types[$requestedName]['params']);
     }
 }
