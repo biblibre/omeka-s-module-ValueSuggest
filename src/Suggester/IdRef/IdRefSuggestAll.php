@@ -4,23 +4,23 @@ namespace ValueSuggest\Suggester\IdRef;
 
 use ValueSuggest\Suggester\SuggesterInterface;
 use Laminas\Http\Client;
+use Laminas\Http\Request;
 
 class IdRefSuggestAll implements SuggesterInterface
 {
+    const SOLR_URL = 'https://www.idref.fr/Sru/Solr';
+
     /**
      * @var Client
      */
     protected $client;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected array $params = [];
 
-    public function __construct(Client $client, $url)
+    public function __construct(Client $client, array $params)
     {
         $this->client = $client;
-        $this->url = $url;
+        $this->params = $params;
     }
 
     /**
@@ -33,16 +33,18 @@ class IdRefSuggestAll implements SuggesterInterface
      */
     public function getSuggestions($query, $lang = null)
     {
-        // Convert the query into a Solr query.
-        $query = trim($query);
-        if (strpos($query, ' ')) {
-            $query = '(' . implode('%20AND%20', array_map('urlencode', explode(' ', $query))) . ')';
-        } else {
-            $query = urlencode($query);
-        }
-        $url = $this->url . $query;
+        $request = new Request();
+        $request->setUri(self::SOLR_URL);
+        $request->getQuery()->fromArray($this->params + [
+            'wt' => 'json',
+            'rows' => '30',
+            'fl' => 'score,id,ppn_z,affcourt_z,affcourt_r',
+            'defType' => 'dismax',
+            'mm' => '100%',
+            'q' => trim($query),
+        ]);
 
-        $response = $this->client->setUri($url)->send();
+        $response = $this->client->send($request);
         if (!$response->isSuccess()) {
             return [];
         }
@@ -61,10 +63,10 @@ class IdRefSuggestAll implements SuggesterInterface
                 continue;
             }
             // "affcourt" may be not present in some results (empty words).
-            if (isset($result['affcourt_r'])) {
-                $value = is_array($result['affcourt_r']) ? reset($result['affcourt_r']) : $result['affcourt_r'];
-            } elseif (isset($result['affcourt_z'])) {
+            if (isset($result['affcourt_z'])) {
                 $value = is_array($result['affcourt_z']) ? reset($result['affcourt_z']) : $result['affcourt_z'];
+            } elseif (isset($result['affcourt_r'])) {
+                $value = is_array($result['affcourt_r']) ? reset($result['affcourt_r']) : $result['affcourt_r'];
             } else {
                 $value = $result['ppn_z'];
             }

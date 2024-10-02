@@ -8,7 +8,7 @@ class Idref extends AbstractDataType
 {
     protected $idrefName;
     protected $idrefLabel;
-    protected $idrefUrl;
+    protected array $idrefParams;
 
     public function setIdrefName($idrefName)
     {
@@ -22,9 +22,9 @@ class Idref extends AbstractDataType
         return $this;
     }
 
-    public function setIdrefUrl($idrefUrl)
+    public function setIdrefParams(array $idrefParams)
     {
-        $this->idrefUrl = $idrefUrl;
+        $this->idrefParams = $idrefParams;
         return $this;
     }
 
@@ -32,7 +32,7 @@ class Idref extends AbstractDataType
     {
         return new IdRefSuggestAll(
             $this->services->get('Omeka\HttpClient'),
-            $this->idrefUrl
+            $this->idrefParams
         );
     }
 
