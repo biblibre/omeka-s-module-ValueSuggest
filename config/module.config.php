@@ -7,27 +7,6 @@ return [
             'ValueSuggest\Controller\Index' => Service\IndexControllerFactory::class,
         ],
     ],
-    'form_elements' => [
-        'factories' => [
-            Form\UpdateForm::class => Service\Form\UpdateFormFactory::class,
-        ],
-    ],
-    'navigation' => [
-        'AdminModule' => [
-            [
-                'label' => 'Value Suggest',
-                'route' => 'admin/value-suggest/update',
-                'resource' => 'ValueSuggest\Controller\Index',
-                'privilege' => 'update',
-                'pages' => [
-                    [
-                        'label' => 'Update values', // @translate
-                        'route' => 'admin/value-suggest/update',
-                    ],
-                ],
-            ],
-        ],
-    ],
     'translator' => [
         'translation_file_patterns' => [
             [
@@ -319,15 +298,6 @@ return [
                                     ],
                                 ],
                             ],
-                            'update' => [
-                                'type' => 'Literal',
-                                'options' => [
-                                    'route' => '/update',
-                                    'defaults' => [
-                                        'action' => 'update',
-                                    ],
-                                ],
-                            ]
                         ],
                     ],
                 ],
