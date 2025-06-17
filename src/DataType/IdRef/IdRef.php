@@ -2,12 +2,9 @@
 namespace ValueSuggest\DataType\IdRef;
 
 use ValueSuggest\DataType\AbstractDataType;
-use ValueSuggest\DataType\UpdatableDataTypeInterface;
 use ValueSuggest\Suggester\IdRef\IdRefSuggestAll;
-use ValueSuggest\Updater\IdRefUpdater;
-use ValueSuggest\Updater\UpdaterInterface;
 
-class Idref extends AbstractDataType implements UpdatableDataTypeInterface
+class Idref extends AbstractDataType
 {
     protected $idrefName;
     protected $idrefLabel;
@@ -37,14 +34,6 @@ class Idref extends AbstractDataType implements UpdatableDataTypeInterface
             $this->services->get('Omeka\HttpClient'),
             $this->idrefParams
         );
-    }
-
-    public function getUpdater(): UpdaterInterface
-    {
-        $httpClient = $this->services->get('Omeka\HttpClient');
-        $logger = $this->services->get('Omeka\Logger');
-
-        return new IdRefUpdater($httpClient, $logger);
     }
 
     public function getName()
