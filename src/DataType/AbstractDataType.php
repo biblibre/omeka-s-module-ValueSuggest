@@ -4,12 +4,13 @@ namespace ValueSuggest\DataType;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Representation\ValueRepresentation;
 use Omeka\DataType\AbstractDataType as BaseAbstractDataType;
+use Omeka\DataType\ValueAnnotatingInterface;
 use Omeka\Entity\Value;
 use Laminas\Form\Element\Hidden;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Renderer\PhpRenderer;
 
-abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface
+abstract class AbstractDataType extends BaseAbstractDataType implements DataTypeInterface, ValueAnnotatingInterface
 {
     /**
      * @var ServiceManager
@@ -123,5 +124,17 @@ abstract class AbstractDataType extends BaseAbstractDataType implements DataType
             $jsonLd['@language'] = $value->lang();
         }
         return $jsonLd;
+    }
+
+    public function valueAnnotationPrepareForm(PhpRenderer $view)
+    {
+    }
+
+    public function valueAnnotationForm(PhpRenderer $view)
+    {
+        $html = '<div class="input-body">';
+        $html .= $this->form($view);
+        $html .= '</div>';
+        return $html;
     }
 }
