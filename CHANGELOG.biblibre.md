@@ -2,10 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.17.1+biblibre.3]
+## [1.19.0+biblibre.2]
 
-- Remove automatic updates of ValueSuggest values. It is a separate module now:
-  <https://github.com/biblibre/omeka-s-module-ValueSuggestUpdater>
+- PHP 8.4 compatibility (rector fix)
+
+## [1.19.0+biblibre.1]
+
+- Rebased on 1.19.0 tag
 
 ## [1.17.1+biblibre.2]
 
